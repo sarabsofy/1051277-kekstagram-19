@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [София Барденкова](https://up.htmlacademy.ru/javascript/19/user/1051277).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Лутогин](https://htmlacademy.ru/profile/id1096725).
 
 ---
 
