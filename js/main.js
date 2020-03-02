@@ -1,564 +1,81 @@
 'use strict';
 
 var pictureList = document.querySelector('.pictures');
+var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-var pictureTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
-
-var pictures = [
-  {
-    url: 'photos/1.jpg',
-    description: '',
-    likes: 27,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/7.jpg',
-    description: '',
-    likes: 15,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      }
-    ]
-  },
-  {
-    url: 'photos/5.jpg',
-    description: '',
-    likes: 33,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/8.jpg',
-    description: '',
-    likes: 47,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/6.jpg',
-    description: '',
-    likes: 56,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      }
-    ]
-  },
-  {
-    url: 'photos/4.jpg',
-    description: '',
-    likes: 21,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/2.jpg',
-    description: '',
-    likes: 158,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      }
-    ]
-  },
-  {
-    url: 'photos/3.jpg',
-    description: '',
-    likes: 131,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      }
-    ]
-  },
-  {
-    url: 'photos/10.jpg',
-    description: '',
-    likes: 90,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      }
-    ]
-  },
-  {
-    url: 'photos/9.jpg',
-    description: '',
-    likes: 54,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      }
-    ]
-  },
-  {
-    url: 'photos/13.jpg',
-    description: '',
-    likes: 86,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      }
-    ]
-  },
-  {
-    url: 'photos/12.jpg',
-    description: '',
-    likes: 187,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      }
-    ]
-  },
-  {
-    url: 'photos/14.jpg',
-    description: '',
-    likes: 16,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      }
-    ]
-  },
-  {
-    url: 'photos/11.jpg',
-    description: '',
-    likes: 34,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/18.jpg',
-    description: '',
-    likes: 47,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/15.jpg',
-    description: '',
-    likes: 75,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      }
-    ]
-  },
-  {
-    url: 'photos/17.jpg',
-    description: '',
-    likes: 109,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      }
-    ]
-  },
-  {
-    url: 'photos/16.jpg',
-    description: '',
-    likes: 81,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      }
-    ]
-  },
-  {
-    url: 'photos/19.jpg',
-    description: '',
-    likes: 93,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      }
-    ]
-  },
-  {
-    url: 'photos/22.jpg',
-    description: '',
-    likes: 67,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      }
-    ]
-  },
-  {
-    url: 'photos/20.jpg',
-    description: '',
-    likes: 19,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      }
-    ]
-  },
-  {
-    url: 'photos/21.jpg',
-    description: '',
-    likes: 124,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      },
-      {
-        avatar: 'img/avatar-6.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Настя'
-      }
-    ]
-  },
-  {
-    url: 'photos/25.jpg',
-    description: '',
-    likes: 176,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      },
-      {
-        avatar: 'img/avatar-5.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Никита'
-      }
-    ]
-  },
-  {
-    url: 'photos/23.jpg',
-    description: '',
-    likes: 106,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      }
-    ]
-  },
-  {
-    url: 'photos/24.jpg',
-    description: '',
-    likes: 110,
-    comments: [
-      {
-        avatar: 'img/avatar-1.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Пётр'
-      },
-      {
-        avatar: 'img/avatar-2.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Евгений'
-      },
-      {
-        avatar: 'img/avatar-3.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Колян'
-      },
-      {
-        avatar: 'img/avatar-4.svg',
-        message: 'В целом всё неплохо. Но не всё.',
-        name: 'Маруся'
-      }
-    ]
-  }
+var arrayPictures = [];
+var addressesPicture = [];
+var descriptionsPicture = [];
+var commentAvatars = [];
+var commentNames = ['Петя', 'Николай', 'Алёна', 'Настя', 'Евгений', 'Никита'];
+var commentTexts = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+var picturesLength = 25; // Count of picture elements
+
+// create pics urls
+var picturesUrl = function (array, name, count, format) {
+  for (var i = 0; i < count; i++) {
+    array[i] = name + (i + 1) + '.' + format;
+  }
+};
+
+picturesUrl(commentAvatars, 'img/avatar-', 6, 'svg');
+picturesUrl(addressesPicture, 'photos/', picturesLength, 'jpg');
+
+// get pandom data from array
+var getRandomData = function (array, splice) {
+
+  var result = Math.floor(Math.random() * array.length);
+  var content = array[result];
+
+  if (splice) {
+    array.splice(result, 1);
+  }
+
+  return content;
+};
+
+// create comments
+var getComments = function () {
+
+  var commentsCount = Math.floor(Math.random() * commentTexts.length); // get random comments count
+  var copyComments = commentTexts.slice(); // Exclude same text messages
+  var copyAvatars = commentAvatars.slice();
+
+  var comments = [];
+  for (var i = 0; i < commentsCount; i++) {
+    var comment = {
+      name: getRandomData(commentNames, false),
+      avatar: getRandomData(copyAvatars, true),
+      message: getRandomData(copyComments, true)
+    };
+
+    comments.push(comment);
+  }
+
+  return comments;
+};
+
+// Create pictures objects
+for (var i = 0; i < picturesLength; i++) {
+  var item = {
+    url: getRandomData(addressesPicture, true),
+    description: getRandomData(descriptionsPicture, true),
+    likes: Math.floor(Math.random() * (200 - 15 + 1) + 15),
+    comments: getComments()
+  };
+
+  arrayPictures.push(item);
+}
+
+// RENDER
 var renderPicture = function (picture) {
   var pictureElement = pictureTemplate.cloneNode(true);
 
@@ -570,8 +87,8 @@ var renderPicture = function (picture) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < pictures.length; i++) {
-  fragment.appendChild(renderPicture(pictures[i]));
+for (var j = 0; j < arrayPictures.length; j++) {
+  fragment.appendChild(renderPicture(arrayPictures[j]));
 }
 
 pictureList.appendChild(fragment);
