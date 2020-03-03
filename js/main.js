@@ -3,6 +3,22 @@
 var pictureList = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+var bigPicture = document.querySelector('.big-picture');
+bigPicture.classList.remove('hidden');
+
+if (!bigPicture.classList.contains('hidden')) {
+  document.querySelector('body').classList.add('modal-open');
+}
+
+var commentCount = document.querySelector('.social__comment-count');
+commentCount.classList.add('hidden');
+
+var commentLoad = document.querySelector('.comments-loader');
+commentLoad.classList.add('hidden');
+
+var commentList = document.querySelector('.social__comments');
+var commentTemplate = document.querySelector('.social__comment');
+
 var arrayPictures = [];
 var addressesPicture = [];
 var descriptionsPicture = [];
@@ -59,32 +75,33 @@ var getComments = function () {
 
     comments.push(comment);
   }
-
   return comments;
 };
+
+var arrayComments = getComments();
 
 // Create pictures objects
 for (var i = 0; i < picturesLength; i++) {
   var item = {
     url: getRandomData(addressesPicture, true),
     description: getRandomData(descriptionsPicture, true),
-    likes: Math.floor(Math.random() * (200 - 15 + 1) + 15),
-    comments: getComments()
+    likes: Math.floor(Math.random() * 186 + 15),
+    comments: arrayComments
   };
 
   arrayPictures.push(item);
 }
 
-// RENDER
+// RENDER ALL PICTURES
 var renderPicture = function (picture) {
   var pictureElement = pictureTemplate.cloneNode(true);
 
   pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
-
   return pictureElement;
 };
+
 
 var fragment = document.createDocumentFragment();
 for (var j = 0; j < arrayPictures.length; j++) {
@@ -92,3 +109,39 @@ for (var j = 0; j < arrayPictures.length; j++) {
 }
 
 pictureList.appendChild(fragment);
+
+// RENDER MODAL OF SINGLE PICTURE
+
+// Get content of single comment
+var renderComment = function (comment) {
+  var commentElement = commentTemplate.cloneNode(true);
+
+  commentElement.querySelector('.social__picture').src = comment.avatar;
+  commentElement.querySelector('.social__picture').alt = comment.name;
+  commentElement.querySelector('.social__text').textContent = comment.message;
+  return commentElement;
+};
+
+// Create comment list
+var createComments = function (el) {
+  var fragmentComment = document.createDocumentFragment();
+  for (var k = 0; k < el.length; k++) {
+    fragmentComment.appendChild(renderComment(el[k]));
+  }
+  commentList.innerHTML = '';
+  commentList.appendChild(fragmentComment);
+};
+
+// Render modal content
+var renderModal = function (el) {
+  var pic = arrayPictures[el];
+
+  bigPicture.querySelector('.big-picture__img img').src = pic.url;
+  bigPicture.querySelector('.likes-count').textContent = pic.likes;
+  bigPicture.querySelector('.comments-count').textContent = pic.comments.length;
+  bigPicture.querySelector('.social__caption').textContent = pic.description;
+
+  createComments(pic.comments);
+};
+
+renderModal(0);
