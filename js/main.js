@@ -2,23 +2,13 @@
 
 var pictureList = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
 var bigPicture = document.querySelector('.big-picture');
-bigPicture.classList.remove('hidden');
-
-if (!bigPicture.classList.contains('hidden')) {
-  document.querySelector('body').classList.add('modal-open');
-}
-
 var commentCount = document.querySelector('.social__comment-count');
-commentCount.classList.add('hidden');
-
 var commentLoad = document.querySelector('.comments-loader');
-commentLoad.classList.add('hidden');
-
 var commentList = document.querySelector('.social__comments');
 var commentTemplate = document.querySelector('.social__comment');
 
+var picturesLength = 25; // Count of picture elements
 var arrayPictures = [];
 var addressesPicture = [];
 var descriptionsPicture = [];
@@ -32,8 +22,6 @@ var commentTexts = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-
-var picturesLength = 25; // Count of picture elements
 
 // create pics urls
 var picturesUrl = function (array, name, count, format) {
@@ -78,15 +66,13 @@ var getComments = function () {
   return comments;
 };
 
-var arrayComments = getComments();
-
 // Create pictures objects
 for (var i = 0; i < picturesLength; i++) {
   var item = {
     url: getRandomData(addressesPicture, true),
     description: getRandomData(descriptionsPicture, true),
-    likes: Math.floor(Math.random() * 186 + 15),
-    comments: arrayComments
+    likes: Math.floor(Math.random() * 186 + 15), // Range likes from 15 to 200
+    comments: getComments()
   };
 
   arrayPictures.push(item);
@@ -142,6 +128,14 @@ var renderModal = function (el) {
   bigPicture.querySelector('.social__caption').textContent = pic.description;
 
   createComments(pic.comments);
+
+  commentCount.classList.add('hidden');
+  commentLoad.classList.add('hidden');
+
+  bigPicture.classList.remove('hidden');
+  if (!bigPicture.classList.contains('hidden')) {
+    document.querySelector('body').classList.add('modal-open');
+  }
 };
 
 renderModal(0);
