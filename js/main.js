@@ -160,16 +160,18 @@ var closePicture = function () {
   document.addEventListener('keydown', onPictureEnterPress);
 };
 
-var onPictureEnterPress = function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPicture(evt);
+var keydownHandler = function (evt, key, func) {
+  if (evt.key === key) {
+    func(evt);
   }
 };
 
+var onPictureEnterPress = function (evt) {
+  keydownHandler(evt, ENTER_KEY, openPicture);
+};
+
 var onPictureEscPress = function (evt) {
-  if (evt.key === ESC_KEY) {
-    closePicture();
-  }
+  keydownHandler(evt, ESC_KEY, closePicture);
 };
 
 pictureList.addEventListener('click', function (evt) {
