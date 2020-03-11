@@ -1,6 +1,9 @@
 'use strict';
 
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
 var pictureList = document.querySelector('.pictures');
+var bigPictureClose = document.querySelector('.big-picture__cancel');
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 var bigPicture = document.querySelector('.big-picture');
 var commentCount = document.querySelector('.social__comment-count');
@@ -79,19 +82,20 @@ for (var i = 0; i < picturesLength; i++) {
 }
 
 // RENDER ALL PICTURES
-var renderPicture = function (picture) {
+var renderPicture = function (picture, id) {
   var pictureElement = pictureTemplate.cloneNode(true);
 
   pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
   pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
+  pictureElement.dataset.id = id;
   return pictureElement;
 };
 
 
 var fragment = document.createDocumentFragment();
 for (var j = 0; j < arrayPictures.length; j++) {
-  fragment.appendChild(renderPicture(arrayPictures[j]));
+  fragment.appendChild(renderPicture(arrayPictures[j], j));
 }
 
 pictureList.appendChild(fragment);
@@ -132,17 +136,54 @@ var renderModal = function (el) {
   commentCount.classList.add('hidden');
   commentLoad.classList.add('hidden');
 
-  // bigPicture.classList.remove('hidden');
   if (!bigPicture.classList.contains('hidden')) {
     document.querySelector('body').classList.add('modal-open');
   }
 };
 
-renderModal(0);
+// open and close big picture
+var openPicture = function (evt) {
+  var target = evt.target;
+  if (target.matches('a[data-id]') || target.parentNode.matches('a[data-id]')) {
+    evt.preventDefault();
+    var id = target.dataset.id || target.parentNode.dataset.id;
+    renderModal(id);
+    bigPicture.classList.remove('hidden');
+    document.addEventListener('keydown', onPictureEscPress);
+    document.removeEventListener('keydown', onPictureEnterPress);
+  }
+};
+
+var closePicture = function () {
+  bigPicture.classList.add('hidden');
+  document.removeEventListener('keydown', onPictureEscPress);
+  document.addEventListener('keydown', onPictureEnterPress);
+};
+
+var keydownHandler = function (evt, key, func) {
+  if (evt.key === key) {
+    func(evt);
+  }
+};
+
+var onPictureEnterPress = function (evt) {
+  keydownHandler(evt, ENTER_KEY, openPicture);
+};
+
+var onPictureEscPress = function (evt) {
+  keydownHandler(evt, ESC_KEY, closePicture);
+};
+
+pictureList.addEventListener('click', function (evt) {
+  openPicture(evt);
+});
+
+bigPictureClose.addEventListener('click', function () {
+  closePicture();
+});
 
 // UPLOAD IMAGE FILTER
 
-var ESC_KEY = 'Escape';
 var body = document.querySelector('body');
 var formUpload = body.querySelector('.img-upload__form');
 var inputUpload = formUpload.querySelector('#upload-file');
