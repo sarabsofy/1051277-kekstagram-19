@@ -4,8 +4,10 @@
   var effectPin = document.querySelector('.effect-level__pin');
   var effectList = document.querySelector('.effects__list');
   var effectLevelLine = document.querySelector('.effect-level__line');
+  var effectLevelDepth = document.querySelector('.effect-level__depth');
 
   var currentEffect = 'none';
+  var draggable = false;
   var effectsValues = [
     {
       name: 'none',
@@ -65,6 +67,9 @@
   effectList.addEventListener('change', function (evt) {
     if (evt.target && evt.target.matches('input[type="radio"]')) {
       window.upload.effectLevelValue.value = 100;
+      effectPin.style.left = '100%';
+      effectLevelDepth.style.width = '100%';
+      draggable = false;
 
       var target = evt.target;
       var preveEffect = 'effects__preview--' + currentEffect;
@@ -96,18 +101,48 @@
     return newValue;
   };
 
-  effectPin.addEventListener('mouseup', function (evt) {
+  var setDistanceEffect = function (evt) {
     var evtX = evt.clientX;
     var coords = effectLevelLine.getBoundingClientRect();
 
     var start = coords.x;
     var end = coords.right;
     var levelPercent = Math.floor(interpolation(evtX, start, end, 0, 100));
+
+    if (levelPercent >= 100) {
+      levelPercent = 100;
+    }
+    if (levelPercent <= 0) {
+      levelPercent = 0;
+    }
+
     var value = interpolation(evtX, start, end, effectObject.min, effectObject.max);
     value = value.toFixed(2) + effectObject.unit;
+
     window.upload.effectLevelValue.value = levelPercent;
 
+    effectPin.style.left = levelPercent + '%';
+    effectPin.style.transform = 'tranlateX(-50%)';
+    effectLevelDepth.style.width = levelPercent + '%';
+
     window.upload.preview.style.filter = effectObject.filter + '(' + value + ')';
+  };
+
+  effectLevelLine.addEventListener('mousedown', function () {
+    draggable = true;
+  });
+
+  effectLevelLine.addEventListener('mousemove', function (evt) {
+    if (draggable === true) {
+      setDistanceEffect(evt);
+    }
+  });
+
+  document.addEventListener('mouseup', function (evt) {
+    if (draggable === true) {
+      draggable = false;
+      setDistanceEffect(evt);
+    }
   });
 
 })();
