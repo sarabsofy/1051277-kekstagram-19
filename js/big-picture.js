@@ -35,7 +35,7 @@
 
   // Render modal content
   var renderModal = function (el) {
-    var pic = window.gallery.array[el];
+    var pic = window.load.arrayPictures[el];
 
     bigPicture.querySelector('.big-picture__img img').src = pic.url;
     bigPicture.querySelector('.likes-count').textContent = pic.likes;
@@ -46,10 +46,6 @@
 
     commentCount.classList.add('hidden');
     commentLoad.classList.add('hidden');
-
-    if (!bigPicture.classList.contains('hidden')) {
-      document.querySelector('body').classList.add('modal-open');
-    }
   };
 
   // open and close big picture
@@ -60,6 +56,7 @@
       var id = target.dataset.id || target.parentNode.dataset.id;
       renderModal(id);
       bigPicture.classList.remove('hidden');
+      document.querySelector('body').classList.add('modal-open');
       document.addEventListener('keydown', onPictureEscPress);
       document.removeEventListener('keydown', onPictureEnterPress);
     }
@@ -67,6 +64,7 @@
 
   var closePicture = function () {
     bigPicture.classList.add('hidden');
+    document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', onPictureEscPress);
     document.addEventListener('keydown', onPictureEnterPress);
   };
