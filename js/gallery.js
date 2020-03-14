@@ -24,10 +24,10 @@
     pictureList.appendChild(fragment);
   };
 
-  var succsessUploadHandler = function (data) {
+  var successLoadHandler = function (data) {
     window.load.arrayPictures = data;
     createArrayPictures(window.load.arrayPictures);
   };
 
-  window.load.loadData(succsessUploadHandler);
+  window.load.loadData(successLoadHandler);
 })();

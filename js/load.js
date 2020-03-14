@@ -36,6 +36,7 @@
 
   window.load = {
     loadData: loadData,
-    arrayPictures: arrayPictures
+    arrayPictures: arrayPictures,
+    StatusCode: StatusCode
   };
 })();

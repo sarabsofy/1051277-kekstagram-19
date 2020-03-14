@@ -10,6 +10,11 @@
   var scaleInput = imageEdit.querySelector('.scale__control--value');
   var effectSlider = imageEdit.querySelector('.img-upload__effect-level');
   var effectLevelValue = imageEdit.querySelector('.effect-level__value');
+  var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  var mainContainer = document.querySelector('main');
+  var errorButtonClose = errorMessageTemplate.querySelector('.error__button');
+  var successButtonClose = successMessageTemplate.querySelector('.success__button');
 
   // open and close modal
   var onPopupEscPress = function (evt) {
@@ -44,6 +49,57 @@
 
   buttonClose.addEventListener('click', function () {
     closeModal();
+  });
+
+  // create message
+  var createUploadMessage = function (message) {
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(message);
+    mainContainer.appendChild(fragment);
+  };
+
+  // close message
+  var closeUploadMessage = function (message) {
+    message.remove();
+  };
+
+  var messageEscPressHandler = function (evt, message) {
+    if (evt.key === window.bigPicture.ESC_KEY) {
+      closeUploadMessage(message);
+    }
+  };
+
+
+  var uploadHandler = function (message, button) {
+    inputUpload.value = '';
+    formUpload.reset();
+    closeModal();
+    createUploadMessage(message);
+    document.addEventListener('keydown', function (evt) {
+      messageEscPressHandler(evt, message);
+    });
+    button.addEventListener('click', function () {
+      closeUploadMessage(message);
+    });
+    document.addEventListener('click', function (evt) {
+      var target = evt.target;
+      if (target !== document.querySelector('.success__inner') && target !== document.querySelector('.error__inner')) {
+        closeUploadMessage(message);
+      }
+    });
+  };
+
+  var successUploadHandler = function () {
+    uploadHandler(successMessageTemplate, successButtonClose);
+  };
+
+  var errorUploadHandler = function () {
+    uploadHandler(errorMessageTemplate, errorButtonClose);
+  };
+
+  formUpload.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.uploadData(new FormData(formUpload), successUploadHandler, errorUploadHandler);
   });
 
   window.upload = {
