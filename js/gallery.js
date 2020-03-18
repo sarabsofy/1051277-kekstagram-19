@@ -27,7 +27,15 @@
   var successLoadHandler = function (data) {
     window.load.arrayPictures = data;
     createArrayPictures(window.load.arrayPictures);
+    window.sorting.getRandomPhotos();
+    window.sorting.getDefaultPhotos();
+    window.sorting.getDiscussedPhotos();
   };
 
   window.load.loadData(successLoadHandler);
+
+  window.gallery = {
+    pictureList: pictureList,
+    createArrayPictures: createArrayPictures
+  };
 })();
