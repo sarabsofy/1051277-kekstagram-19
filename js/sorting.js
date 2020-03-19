@@ -8,8 +8,6 @@
   var filterDefaultButton = filter.querySelector('#filter-default');
   var filterDiscussedButton = filter.querySelector('#filter-discussed');
 
-  filter.classList.remove('img-filters--inactive');
-
   var getRandomData = function (array, splice) {
     var result = Math.floor(Math.random() * array.length);
     var content = array[result];
@@ -56,8 +54,8 @@
         filterRandomButton.classList.add('img-filters__button--active');
         cleanArrayPictures();
 
-        var output = window.load.arrayPictures.slice();
         var randomPhotos = [];
+        var output = window.load.arrayPictures.slice();
 
         for (var i = 0; i < IMG_COUNT; i++) {
           var item = getRandomData(output, true);
@@ -91,7 +89,8 @@
   window.sorting = {
     getRandomPhotos: getRandomPhotos,
     getDefaultPhotos: getDefaultPhotos,
-    getDiscussedPhotos: getDiscussedPhotos
+    getDiscussedPhotos: getDiscussedPhotos,
+    filter: filter
   };
 
 })();
