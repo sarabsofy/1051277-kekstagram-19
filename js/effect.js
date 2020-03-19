@@ -107,7 +107,7 @@
 
     var start = coords.x;
     var end = coords.right;
-    var levelPercent = interpolation(evtX, start, end, 0, 100);
+    var levelPercent = Math.floor(interpolation(evtX, start, end, 0, 100));
 
     if (levelPercent >= 100) {
       levelPercent = 100;
