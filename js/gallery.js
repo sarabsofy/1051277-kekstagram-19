@@ -18,13 +18,20 @@
   var createArrayPictures = function (array) {
     var fragment = document.createDocumentFragment();
     for (var j = 0; j < array.length; j++) {
-      fragment.appendChild(renderPicture(array[j], j));
+      fragment.appendChild(renderPicture(array[j], array[j].id));
     }
 
     pictureList.appendChild(fragment);
   };
 
   var successLoadHandler = function (data) {
+    for (var item in data) {
+      if (data.hasOwnProperty(item)) {
+        data[item]['id'] = item;
+      }
+    }
+
+    window.sorting.filter.classList.remove('img-filters--inactive');
     window.load.arrayPictures = data;
     createArrayPictures(window.load.arrayPictures);
     window.sorting.getRandomPhotos();

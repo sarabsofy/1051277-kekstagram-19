@@ -7,14 +7,14 @@
   var scaleStep = 25; // default step
 
   var scalePhoto = function (scale) {
-    window.upload.preview.style.transform = 'scale(' + scale * 0.01 + ')';
+    window.upload.preview.querySelector('img').style.transform = 'scale(' + scale * 0.01 + ')';
   };
 
   scalePhoto(percent); // set default scale
 
   scaleButtonMinus.addEventListener('click', function () {
     percent = window.upload.scaleInput.value.replace('%', '');
-    if (percent > 25) {
+    if (percent > scaleStep) {
       percent = Number(percent) - scaleStep;
       window.upload.scaleInput.value = percent + '%';
     }

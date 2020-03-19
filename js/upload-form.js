@@ -17,7 +17,7 @@
   var successButtonClose = successMessageTemplate.querySelector('.success__button');
 
   // open and close modal
-  var onPopupEscPress = function (evt) {
+  var popupEscPressHandler = function (evt) {
     if (evt.key === window.bigPicture.ESC_KEY &&
       !evt.target.classList.contains('text__hashtags') &&
       !evt.target.classList.contains('text__description')) {
@@ -30,7 +30,7 @@
   var closeModal = function () {
     imageEdit.classList.add('hidden');
     body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener('keydown', popupEscPressHandler);
 
     // delete old filter styles
     photoPreview.style.filter = '';
@@ -44,7 +44,7 @@
     scaleInput.value = '100%';
     effectLevelValue.value = 100;
     effectSlider.classList.add('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('keydown', popupEscPressHandler);
   });
 
   buttonClose.addEventListener('click', function () {

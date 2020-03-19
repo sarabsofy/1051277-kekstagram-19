@@ -8,7 +8,11 @@
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(/\s+/);
 
-    if (hashtags.length === 0) {
+    tagInput.classList.add('invalid');
+
+    // if field is empty -> ok
+    if (hashtags.length === 0 || hashtags[0] === '') {
+      tagInput.classList.remove('invalid');
       return '';
     }
 
@@ -42,6 +46,8 @@
       return 'Можно указать не больше ' + INPUT_LENGTH + '-ти хэш-тегов';
     }
 
+    // validate success
+    tagInput.classList.remove('invalid');
     return '';
   };
 
