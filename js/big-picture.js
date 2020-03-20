@@ -3,16 +3,17 @@
 (function () {
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
+  var COMENT_COUNTER = 5;
+  var COMMENT_STEP = 5;
+  var COMMENT_COUNTER_DEFAULT = 5;
 
-  var pictureList = document.querySelector('.pictures');
-  var bigPictureClose = document.querySelector('.big-picture__cancel');
   var bigPicture = document.querySelector('.big-picture');
-  var commentCount = document.querySelector('.social__comment-count');
-  var commentLoad = document.querySelector('.comments-loader');
-  var commentList = document.querySelector('.social__comments');
-  var commentTemplate = document.querySelector('.social__comment');
-  var commentCounter = 5;
-  var commentStep = 5;
+  var pictureList = document.querySelector('.pictures');
+  var bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+  var commentCount = bigPicture.querySelector('.social__comment-count');
+  var commentLoad = bigPicture.querySelector('.comments-loader');
+  var commentList = bigPicture.querySelector('.social__comments');
+  var commentTemplate = bigPicture.querySelector('.social__comment');
   var commentsLoadHandler;
 
 
@@ -35,10 +36,10 @@
     commentList.innerHTML = '';
     var almost;
 
-    if (el.length <= commentCounter) {
+    if (el.length <= COMENT_COUNTER) {
       almost = el.length;
     } else {
-      almost = commentCounter;
+      almost = COMENT_COUNTER;
     }
 
     commentCount.innerHTML = almost + ' из <span class="comments-count">' + el.length + '</span> комментариев';
@@ -54,26 +55,26 @@
     bigPicture.querySelector('.comments-count').textContent = pic.comments.length;
     bigPicture.querySelector('.social__caption').textContent = pic.description;
 
-    if (pic.comments.length <= commentCounter) {
+    if (pic.comments.length <= COMENT_COUNTER) {
       createComments(pic.comments, pic.comments.length);
       commentLoad.classList.add('hidden');
     } else {
       commentLoad.classList.remove('hidden');
-      createComments(pic.comments, commentCounter);
+      createComments(pic.comments, COMENT_COUNTER);
     }
 
     commentsLoadHandler = function () {
-      commentCounter += commentStep;
+      COMENT_COUNTER += COMMENT_STEP;
 
-      if (pic.comments.length > commentCounter) {
-        createComments(pic.comments, commentCounter);
+      if (pic.comments.length > COMENT_COUNTER) {
+        createComments(pic.comments, COMENT_COUNTER);
       } else {
         createComments(pic.comments, pic.comments.length);
         commentLoad.classList.add('hidden');
-        commentCounter = pic.comments.length;
+        COMENT_COUNTER = pic.comments.length;
       }
 
-      commentCount.innerHTML = commentCounter + ' из <span class="comments-count">' + pic.comments.length + '</span> комментариев';
+      commentCount.innerHTML = COMENT_COUNTER + ' из <span class="comments-count">' + pic.comments.length + '</span> комментариев';
     };
   };
 
@@ -99,7 +100,7 @@
     document.removeEventListener('keydown', pictureEscPressHandler);
     document.addEventListener('keydown', pictureEnterPressHandler);
     commentLoad.removeEventListener('click', commentsLoadHandler);
-    commentCounter = 5;
+    COMENT_COUNTER = COMMENT_COUNTER_DEFAULT;
   };
 
   var keydownHandler = function (evt, key, func) {

@@ -1,10 +1,11 @@
 'use strict';
 
 (function () {
-  var effectPin = document.querySelector('.effect-level__pin');
-  var effectList = document.querySelector('.effects__list');
-  var effectLevelLine = document.querySelector('.effect-level__line');
-  var effectLevelDepth = document.querySelector('.effect-level__depth');
+  var formUpload = document.querySelector('.img-upload__form');
+  var effectPin = formUpload.querySelector('.effect-level__pin');
+  var effectList = formUpload.querySelector('.effects__list');
+  var effectLevelLine = formUpload.querySelector('.effect-level__line');
+  var effectLevelDepth = formUpload.querySelector('.effect-level__depth');
 
   var currentEffect = 'none';
   var draggable = false;

@@ -34,7 +34,7 @@
 
     // delete old filter styles
     photoPreview.style.filter = '';
-    photoPreview.style.transform = '';
+    photoPreview.querySelector('img').style.transform = '';
     photoPreview.classList.value = 'img-upload__preview';
   };
 
@@ -61,6 +61,9 @@
   // close message
   var closeUploadMessage = function (message) {
     message.remove();
+    document.removeEventListener('keydown', function (evt) {
+      messageEscPressHandler(evt, message);
+    });
   };
 
   var messageEscPressHandler = function (evt, message) {
@@ -99,7 +102,7 @@
 
   formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.uploadData(new FormData(formUpload), successUploadHandler, errorUploadHandler);
+    window.load.uploadData(new FormData(formUpload), successUploadHandler, errorUploadHandler);
   });
 
   window.upload = {

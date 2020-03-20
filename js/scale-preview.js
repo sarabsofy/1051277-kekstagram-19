@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var DEFAULT_SCALE = 100;
   var scaleButtonMinus = document.querySelector('.scale__control--smaller');
   var scaleButtonPlus = document.querySelector('.scale__control--bigger');
   var percent = 100; // default scale
@@ -23,7 +24,7 @@
 
   scaleButtonPlus.addEventListener('click', function () {
     percent = window.upload.scaleInput.value.replace('%', '');
-    if (percent < 100) {
+    if (percent < DEFAULT_SCALE) {
       percent = Number(percent) + scaleStep;
       window.upload.scaleInput.value = percent + '%';
     }
