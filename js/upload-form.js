@@ -102,7 +102,7 @@
 
   formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.load.uploadData(new FormData(formUpload), successUploadHandler, errorUploadHandler);
+    window.load.loadData(successUploadHandler, 'POST', window.load.URL_POST, errorUploadHandler, new FormData(formUpload));
   });
 
   window.upload = {

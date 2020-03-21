@@ -9,7 +9,7 @@
   };
   var arrayPictures = [];
 
-  var loadData = function (successHandler) {
+  var loadData = function (successHandler, method, url, errorHandler, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -17,11 +17,13 @@
       if (xhr.status === StatusCode.OK) {
         successHandler(xhr.response);
       } else {
+        errorHandler();
         throw new Error('Произошла ошибка: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
     xhr.addEventListener('error', function () {
+      errorHandler();
       throw new Error('Произошла ошибка соединения');
     });
 
@@ -31,33 +33,14 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open('GET', URL_GET);
-    xhr.send();
-  };
-
-  var uploadData = function (data, successHandler, errorHandler) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === StatusCode.OK) {
-        successHandler(xhr.response);
-      } else {
-        errorHandler();
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      errorHandler();
-    });
-
-    xhr.open('POST', URL_POST);
+    xhr.open(method, url);
     xhr.send(data);
   };
 
   window.load = {
     loadData: loadData,
-    uploadData: uploadData,
+    URL_POST: URL_POST,
+    URL_GET: URL_GET,
     arrayPictures: arrayPictures
   };
 })();

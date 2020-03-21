@@ -39,7 +39,7 @@
     window.sorting.getDiscussedPhotos();
   };
 
-  window.load.loadData(successLoadHandler);
+  window.load.loadData(successLoadHandler, 'GET', window.load.URL_GET);
 
   window.gallery = {
     pictureList: pictureList,
